@@ -1,0 +1,70 @@
+body{
+	background-color: #f4f7fb;
+ }
+
+.contenido{
+	height: 400px;	
+}
+
+.content{
+	height: 400px;	
+}
+.cerrar
+{
+	margin-top: 3%;
+}
+.tabla {
+    white-space: nowrap;
+    max-width: none;
+    width: auto;
+}
+
+
+#header{
+	position: relative;
+	background-color: #4483c7; 
+	background-image: -webkit-linear-gradient(#2e8dd5 0%, #5bbbeb 100%);
+	background-image: -o-linear-gradient(#2e8dd5 0%, #5bbbeb 100%);
+	background-image: linear-gradient(#2e8dd5 0%, #5bbbeb 100%);
+	color: #FFF;
+}
+
+textarea{
+	resize:none;
+}
+section{
+	min-height: 350px;
+}
+.crear-partida
+{
+	max-width: 150px;
+}
+
+a{
+	text-decoration: none;
+	color: #444;
+	font-size: 18px;
+}
+.login
+{
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+section
+{
+	width: 100%;
+	padding: 0;
+}
+.search
+{
+	padding-left: 0 !important; 
+}
+.search-container
+{
+	margin-bottom: 2%;
+}
+
+#imgBanner{
+	width: 90%;
+	height: auto;
+}
