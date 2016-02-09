@@ -17,7 +17,7 @@ use Auth;
 
 class FacturaController extends Controller
 {
-   
+
 
     /**
      * Muestra el formulario para creear una nueva factura
@@ -32,8 +32,44 @@ class FacturaController extends Controller
             ->where('tUsuario_idUsuario', Auth::user()->id)
             ->first();
 
-        return view('transaccion/nuevaTransaccion', ['mensaje' => null, 'anno' => $anno]);  
-        } 
+        return view('transaccion/nuevaTransaccion', ['mensaje' => null, 'anno' => $anno]);
+        }
+        return view('layouts/master');
+    }
+
+    /**
+     * Muestra el formulario para creear una nueva factura pendiente
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createPendiente()
+    {   if(Auth::user()){
+        $anno = DB::table('tconfiguracion')
+            ->select('iValor')
+            ->where('vConfiguracion','Periodo')
+            ->where('tUsuario_idUsuario', Auth::user()->id)
+            ->first();
+
+        return view('transaccion/nuevaPendiente', ['mensaje' => null, 'anno' => $anno]);
+        }
+        return view('layouts/master');
+    }
+
+    /**
+     * Muestra el formulario para creear un nuevo reintegro de una factura pendiente
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createReintregro()
+    {   if(Auth::user()){
+        $anno = DB::table('tconfiguracion')
+            ->select('iValor')
+            ->where('vConfiguracion','Periodo')
+            ->where('tUsuario_idUsuario', Auth::user()->id)
+            ->first();
+
+        return view('transaccion/nuevoReintegro', ['mensaje' => null, 'anno' => $anno]);
+        }
         return view('layouts/master');
     }
 
@@ -44,15 +80,15 @@ class FacturaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $input= $request->all();
         $count = 0;
         $campo = 1;
         $tipo =  $request->vTipoFactura;
-        $documento = $request->vDocumento;        
+        $documento = $request->vDocumento;
         $fecha = $request->dFechaFactura;
         $descripcion = $request->vDescripcionFactura;
-        $listaFactura = []; 
+        $listaFactura = [];
         $listaPartida = [];
 
 
@@ -106,10 +142,10 @@ class FacturaController extends Controller
                 array_push($listaPartida, $presupuesto_partida);
 
                 $reserva = DB::table('treserva')->where('vReserva', $fac->vDetalleFactura)->first();
-                //return dd($reserva); 
+                //return dd($reserva);
                 if($reserva == null){
                      return redirect('transaccion/create')->withErrors('Debe seleccionar una reserva válida');
-                } 
+                }
                 if($reserva->iMontoFactura < $fac->iMontoFactura){
                     return redirect('transaccion/create')->withErrors('El monto de una partida excede el limite posible');
                 }
@@ -122,7 +158,7 @@ class FacturaController extends Controller
                     return redirect('transaccion/create')->withErrors('El monto de una partida excede el limitesd posible');
                 }
            }
-            
+
         }
 
         foreach ($listaFactura as $fac) {
@@ -156,23 +192,23 @@ class FacturaController extends Controller
                 $date = date('Y/m/d h:i:s');
                 $reserva = DB::table('treserva')->where('vReserva', $fac->vDetalleFactura)->first();
               //  DB::table('treserva')->update('deleted_at', $date)->where('vReserva', $fac->vDetalleFactura);
-                $fac->vDetalleFactura = 'Cancelacion de la reserva '.$reserva->vDocumento.' '.$reserva->vDetalle;   
+                $fac->vDetalleFactura = 'Cancelacion de la reserva '.$reserva->vDocumento.' '.$reserva->vDetalle;
             }
 
             $fac->save();
             $this->calcularReserva();
-            
+
         }
 
 
-        return redirect('transaccion/create')->with('mensaje','s');        
+        return redirect('transaccion/create')->with('mensaje','s');
     }
 
 
     /**
      * Calcula la reserva las partidas
      *
-     * @param 
+     * @param
      * @return \Illuminate\Http\Response
      */
     public function calcularReserva()
@@ -180,7 +216,7 @@ class FacturaController extends Controller
         $reservas = DB::table('treserva')->get();
 
         foreach ($reservas as $reserva) {
-   
+
             $solicitud = DB::table('tfactura')
             ->select('iMontoFactura')
             ->where('vTipoFactura','Solicitud GECO')
@@ -192,13 +228,13 @@ class FacturaController extends Controller
             ->where('vTipoFactura','Pases Adicionales')
             ->where('deleted_at',null)
             ->where('tReserva_vReserva',$reserva->vReserva)->get();
-            
+
             $anulaciones = DB::table('tfactura')
             ->select('iMontoFactura')
             ->where('vTipoFactura','Pases Anulacion')
             ->where('deleted_at',null)
             ->where('tReserva_vReserva',$reserva->vReserva)->get();
-            
+
             $cancelaciones = DB::table('tfactura')
             ->select('iMontoFactura')
             ->where('vTipoFactura','Cancelacion GECO')
@@ -207,20 +243,20 @@ class FacturaController extends Controller
             ->get();
 
             $montoReserva = 0;
-            
+
             foreach ($solicitud as $s) {
-                $montoReserva = $montoReserva + $s->iMontoFactura;                
+                $montoReserva = $montoReserva + $s->iMontoFactura;
             }
 
             foreach ($adicionales as $a) {
-                $montoReserva = $montoReserva + $a->iMontoFactura;                
+                $montoReserva = $montoReserva + $a->iMontoFactura;
             }
             foreach ($anulaciones as $a) {
-                $montoReserva = $montoReserva - $a->iMontoFactura;                
+                $montoReserva = $montoReserva - $a->iMontoFactura;
             }
-            
+
             foreach ($cancelaciones as $c) {
-                $montoReserva = $montoReserva - $c->iMontoFactura;                
+                $montoReserva = $montoReserva - $c->iMontoFactura;
             }
 
             DB::table('treserva')->where('vReserva', $reserva->vReserva)
@@ -259,7 +295,7 @@ class FacturaController extends Controller
         }
 
         $this->calcularReserva();
-    
+
         return redirect('/partida/'.$partida);
     }
 }

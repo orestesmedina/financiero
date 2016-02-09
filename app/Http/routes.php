@@ -44,7 +44,7 @@ Route::post('respaldo', 'UsuarioController@respaldo');
 
 //rutas de configuracion del sistema
 Route::get('/configuracion', function(){
-   
+
    $config = DB::table('tconfiguracion')
     ->select('iValor')
     ->where('vConfiguracion','=','Periodo')
@@ -161,6 +161,8 @@ Route::get('/presupuesto/informe-fin-gestion/{idPresupuesto}',function($idPresup
 //Factura routes...
 Route::resource('transaccion', 'FacturaController');
 Route::get('transaccion/create', 'FacturaController@create');
+Route::get('transaccion/pendiente/create', 'FacturaController@createPendiente'); //ruta factura pendiente
+Route::get('transaccion/reintegro/create', 'FacturaController@createReintregro'); //ruta reintegro factura pendiente
 Route::post('transaccion/{transaccion}/delete', 'FacturaController@destroy');
 
 
@@ -220,9 +222,9 @@ Route::get('/partidas', function () {
     ->where('anno','=',$config->iValor)
     ->orderBy('codPartida')
     ->get();
-    
-    return $presupuestoPartida;	
-});	
+
+    return $presupuestoPartida;
+});
 
 Route::get('/transaccionesReporte', function () {
     $transacciones = Factura::all();
@@ -235,16 +237,16 @@ Route::get('/reservas', function () {
 });
 
 Route::get('/usuarios', function () {
-	$usuario = User::all();	
-    return $usuario;	
+	$usuario = User::all();
+    return $usuario;
 });
 
 Route::get('/coordinaciones', function () {
     $coordinacion = DB::table('tcoordinacion')
     ->join('tusuario_tcoordinacion','tCoordi_idCoordinacion', '=' , 'idCoordinacion')
     ->where('tUsuario_idUsuario', '=' , Auth::user()->id)
-    ->get(); 
-    return $coordinacion;    
+    ->get();
+    return $coordinacion;
 });
 
 Route::get('/presupuestos', function () {
@@ -263,7 +265,7 @@ Route::get('/presupuestos', function () {
     ->where('anno','=',$config->iValor)
     ->get();
 
-    return $presupuestos;   
+    return $presupuestos;
 });
 
 Route::get('/transferencias', function (){
@@ -272,54 +274,54 @@ Route::get('/transferencias', function (){
     ->where('vConfiguracion','=','Periodo')
     ->where('tUsuario_idUsuario', '=', Auth::user()->id)
     ->first();
-   
+
     $transferencias = DB::select('
-        SELECT * 
-        FROM 
+        SELECT *
+        FROM
         (
-        SELECT  
-            `idTransferencia` as `codTransDe`, 
-            `vDocumento` as `docDe`, 
-            `iMontoTransferencia` as `monTransDe`, 
-            `idCoordinacion` as `idCoorDe`, 
-            `vNombreCoordinacion` as `nomCoorDe`, 
-            `vNombrePresupuesto` as `nomPresDe`, 
-            `anno` as `annoDe`, 
-            `codPartida` as `codParDe` 
-        FROM 
-            ttranferencia_partida, 
-            tcoordinacion, 
-            tpartida, 
-            tpresupuesto, 
-            tpresupuesto_tpartida 
-        WHERE 
-            tPresupuestoPartidaDE = id 
-            AND tPresupuesto_idPresupuesto = idPresupuesto 
-            AND tPartida_idPartida = idPartida 
-            AND tCoordinacion_idCoordinacion = idCoordinacion 
+        SELECT
+            `idTransferencia` as `codTransDe`,
+            `vDocumento` as `docDe`,
+            `iMontoTransferencia` as `monTransDe`,
+            `idCoordinacion` as `idCoorDe`,
+            `vNombreCoordinacion` as `nomCoorDe`,
+            `vNombrePresupuesto` as `nomPresDe`,
+            `anno` as `annoDe`,
+            `codPartida` as `codParDe`
+        FROM
+            ttranferencia_partida,
+            tcoordinacion,
+            tpartida,
+            tpresupuesto,
+            tpresupuesto_tpartida
+        WHERE
+            tPresupuestoPartidaDE = id
+            AND tPresupuesto_idPresupuesto = idPresupuesto
+            AND tPartida_idPartida = idPartida
+            AND tCoordinacion_idCoordinacion = idCoordinacion
             AND anno = '.$config->iValor.'
-    ) t1 
+    ) t1
     LEFT JOIN (
-        SELECT 
-            `idTransferencia` as `codTransA`, 
-            `vDocumento` as `docA`, 
-            `iMontoTransferencia` as `monTransA`, 
-            `idCoordinacion` as `idCoorA`, 
-            `vNombreCoordinacion` as `nomCoorA`, 
-            `vNombrePresupuesto` as `nomPresA`, 
-            `anno` as `annoA`, 
-            `codPartida` as `codParA` 
-        FROM 
-            ttranferencia_partida, 
-            tcoordinacion, 
-            tpartida, 
-            tpresupuesto, 
-            tpresupuesto_tpartida 
-        WHERE 
-            tPresupuestoPartidaA = id 
-            AND tPresupuesto_idPresupuesto = idPresupuesto 
-            AND tPartida_idPartida = idPartida 
-            AND tCoordinacion_idCoordinacion = idCoordinacion 
+        SELECT
+            `idTransferencia` as `codTransA`,
+            `vDocumento` as `docA`,
+            `iMontoTransferencia` as `monTransA`,
+            `idCoordinacion` as `idCoorA`,
+            `vNombreCoordinacion` as `nomCoorA`,
+            `vNombrePresupuesto` as `nomPresA`,
+            `anno` as `annoA`,
+            `codPartida` as `codParA`
+        FROM
+            ttranferencia_partida,
+            tcoordinacion,
+            tpartida,
+            tpresupuesto,
+            tpresupuesto_tpartida
+        WHERE
+            tPresupuestoPartidaA = id
+            AND tPresupuesto_idPresupuesto = idPresupuesto
+            AND tPartida_idPartida = idPartida
+            AND tCoordinacion_idCoordinacion = idCoordinacion
             AND anno = '.$config->iValor.'
     ) t2 ON t1.codTransDE = t2.codTransA');
 

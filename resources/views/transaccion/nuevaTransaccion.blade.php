@@ -37,12 +37,12 @@ class="active"
                 <div class="col-md-6">
                     <select name="vTipoFactura" class="form-control" required ng-model="tipo">
                         <option value="Factura credito" ng-selected="true"  >Factura Credito</option>
-                        <option value="Factura pendiente" >Factura Pendiente</option>
-                        <option value="Reintegro de caja chica" >Reintegro de Caja Chica</option>
+                      <!--  <option value="Factura pendiente" >Factura Pendiente</option> -->
+                      <!--  <option value="Reintegro de caja chica" >Reintegro de Caja Chica</option> -->
                         <option value="Solicitud GECO" >Solicitud GECO</option>
                         <option value="Cancelacion GECO">Cancelacion GECO</option>
-                        <option value="Pases Adicionales" >Pases Adicionales</option>
-                        <option value="Pases Anulacion" >Pases Anulación</option>
+                      <!--  <option value="Pases Adicionales" >Pases Adicionales</option> -->
+                      <!--  <option value="Pases Anulacion" >Pases Anulación</option> -->
                         <option value="Requisicion" >Requesición Paq. Basico</option>
                         <option value="Orden de servicio" >Ordenes de Servicio</option>
                         <option value="Otros">Otros</option>
@@ -52,7 +52,7 @@ class="active"
             <div class="form-group">
                 <label class="col-md-6 control-label">Observacion:</label>
                 <div class="col-md-6">
-                    <textarea name="vDescripcionFactura" class="form-control" rows="2"></textarea> 
+                    <textarea name="vDescripcionFactura" class="form-control" rows="2"></textarea>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@ class="active"
             <div class="form-group">
                 <label class="col-md-5 control-label">Fecha:</label>
                 <div class="col-md-7">
-                    <input type="date"  class="form-control" name="dFechaFactura" max="<%date('Y-m-d')%>" required placeholder="AAAA-MM-DD" maxlength="10"> 
+                    <input type="date"  class="form-control" name="dFechaFactura" max="<%date('Y-m-d')%>" required placeholder="AAAA-MM-DD" maxlength="10">
                 </div>
             </div>
             <div class="form-group text-left">
@@ -115,9 +115,9 @@ class="active"
                                                             Gasto: <small>{{partida.iGasto | currency: "₡":0}} </small> <br>
                                                             Reserva: <small>{{partida.iReserva | currency: "₡":0}} </small> <br>
                                                             Saldo: <small>{{partida.iSaldo | currency: "₡":0}}</small></strong>
-                                                            <div ng-if="tipo != 'Pases Anulacion'" ng-init="x.maximo=partida.iSaldo">  
+                                                            <div ng-if="tipo != 'Pases Anulacion'" ng-init="x.maximo=partida.iSaldo">
                                                             </div>
-                                                           
+
                                                         </div>
                                                         <input  type="hidden" name="id{{$index}}" required value="{{x.partida}}">
                                                     </div>
@@ -136,7 +136,7 @@ class="active"
                                     </div>
                                     <div ng-if="tipo == 'Cancelacion GECO' || tipo == 'Pases Anulacion'" ng-controller="reservaTemplate">
                                         <select class="form-control" required name="detalle{{$index}}" ng-model="resSelected">
-                                            <option ng-repeat="reserva in modelRe | filter : search | orderBy : myOrder track by $index" 
+                                            <option ng-repeat="reserva in modelRe | filter : search | orderBy : myOrder track by $index"
                                             ng-if="reserva.tPartida_idPartida == x.partida" value="{{reserva.vReserva}}">
                                             {{reserva.vDocumento}}-{{reserva.vDetalle}}-
                                             {{reserva.iMontoFactura | currency: "₡":0}}
@@ -148,7 +148,7 @@ class="active"
 
                                     <div ng-if="tipo == 'Pases Adicionales'" ng-controller="reservaTemplate">
                                         <select class="form-control" required name="detalle{{$index}}" >
-                                            <option ng-repeat="reserva in modelRe | filter : search | orderBy : myOrder track by $index" 
+                                            <option ng-repeat="reserva in modelRe | filter : search | orderBy : myOrder track by $index"
                                             ng-if="reserva.tPartida_idPartida == x.partida" value="{{reserva.vReserva}}">
                                             {{reserva.vDocumento}}-{{reserva.vDetalle}}-
                                             {{reserva.iMontoFactura | currency: "₡":0}}
@@ -194,7 +194,7 @@ class="active"
 </section>
 @else
     @if(date('Y') != $anno->iValor)
-        Solo se pueden agregar movimientos al presente año. <br> 
+        Solo se pueden agregar movimientos al presente año. <br>
        Para agregar un nuevo movimiento presupuestatio debe <br><br>
        <a href="/configuracion" class="btn btn-info">Configurar Año de Sistema</a>
     @else

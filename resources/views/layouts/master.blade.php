@@ -11,9 +11,11 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
-	<link rel="stylesheet" type="text/css" href="/css/metisMenu.min.css"></link>
-	<link rel="stylesheet" type="text/css" href="/css/sb-admin-2.css"></link>
-	<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css"></link>
+	<link rel="stylesheet" type="text/css" href="/css/metisMenu.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/sb-admin-2.css">
+	<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
+	<link href="/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+	<link rel="stylesheet" href="/datatables/media/css/jquery.dataTables.min.css">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="/js/bootstrap.min.js"></script>
@@ -38,6 +40,7 @@
 	<script src="{!! asset('js/services/mascara.js') !!}" type="text/javascript"></script>
 	<script src="{!! asset('js/metisMenu.min.js') !!}" type="text/javascript"></script>
 	<script src="{!! asset('js/sb-admin-2.js') !!}" type="text/javascript"></script>
+	<script src="/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
 
 
 	<title>Movimientos Presupuestarios - @yield('title')</title>
@@ -99,10 +102,10 @@
 										<a href="#"><i class="fa fa-fw"></i>Pendientes<span class="fa arrow"></span></a>
 										<ul class="nav nav-third-level">
 											<li>
-												<a href="#">Nueva factura pendiente</a>
+												<a href="/transaccion/pendiente/create">Nueva factura pendiente</a>
 											</li>
 											<li>
-												<a href="#">Reintregro de caja chica</a>
+												<a href="/transaccion/reintegro/create">Reintregro de caja chica</a>
 											</li>
 										</ul>
 									</li>
@@ -123,7 +126,7 @@
 							<!--
 							 @if(Auth::user() AND Auth::user()->tienePermiso('Agregar Transaccion', Auth::user()->id))
 							<li @yield( 'movimiento')><a href="/transaccion/create" title="Movimientos">Nuevo Movimiento</a></li>
-							@endif --> @if(Auth::user() AND Auth::user()->tienePermiso('Ver Transferencia', Auth::user()->id))
+							@endif -->@if(Auth::user() AND Auth::user()->tienePermiso('Ver Transferencia', Auth::user()->id))
 							<li @yield( 'transferencia')><a href="/transferencia" title="Acerca de">Transferencias</a></li>
 							@endif @if(Auth::user() AND Auth::user()->tienePermiso('Administrar Usuarios', Auth::user()->id))
 							<li @yield( 'admU')><a href="/usuario" title="Acerca de">Administrar Usuarios</a></li>
