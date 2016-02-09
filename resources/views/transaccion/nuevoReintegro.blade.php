@@ -85,19 +85,41 @@ class="active"
                     <td>Codigo unidad</td>
                     <td>Codigo partida</td>
                     <td>Nombre presupuesto</td>
-                    <td><input type="checkbox" name="name"></td>
+                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
+        					</tr>
+                  <tr>
+                    <td>254</td>
+                    <td>Prueba detalle factura pendiente</td>
+                    <td>$12345</td>
+                    <td>Codigo unidad</td>
+                    <td>Codigo partida</td>
+                    <td>Nombre presupuesto</td>
+                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
+        					</tr>
+                  <tr>
+                    <td>24</td>
+                    <td>Prueba detalle factura pendiente</td>
+                    <td>$12345</td>
+                    <td>Codigo unidad</td>
+                    <td>Codigo partida</td>
+                    <td>Nombre presupuesto</td>
+                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
+        					</tr>
+                  <tr>
+                    <td>22</td>
+                    <td>Prueba detalle factura pendiente</td>
+                    <td>$12345</td>
+                    <td>Codigo unidad</td>
+                    <td>Codigo partida</td>
+                    <td>Nombre presupuesto</td>
+                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
         					</tr>
         				</tbody>
         			</table>
         		</div>
 
-            <ul class="list-group">
+            <ul id="listaReintegrar" class="list-group">
               <a class="list-group-item active">Facturas a reintegrar</a>
-              <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-              <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-              <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-              <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
-              <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
             </ul>
 
             <div class="form-group">
