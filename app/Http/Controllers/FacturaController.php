@@ -14,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
 use Auth;
+use Illuminate\Http\Response;
 
 class FacturaController extends Controller
 {
@@ -67,10 +68,29 @@ class FacturaController extends Controller
             ->where('vConfiguracion','Periodo')
             ->where('tUsuario_idUsuario', Auth::user()->id)
             ->first();
+            $facturaPendiente = DB::select("SELECT fac.vDocumento as documento, fac.vDetalleFactura as detalle,fac.iMontoFactura as monto,presu.tCoordinacion_idCoordinacion as unidad,fac.tPartida_idPartida as partida, presu.vNombrePresupuesto as presupuesto FROM tfactura as fac, tpresupuesto as presu, tpresupuesto_tpartida as pre_par where fac.vTipoFactura = 'Factura pendiente' and fac.tPartida_idPartida = pre_par.id and pre_par.tPresupuesto_idPresupuesto = presu.idPresupuesto");
 
-        return view('transaccion/nuevoReintegro', ['mensaje' => null, 'anno' => $anno]);
+        return view('transaccion/nuevoReintegro', ['mensaje' => null, 'anno' => $anno, 'pendiente' => 
+            $facturaPendiente]);
         }
         return view('layouts/master');
+    }
+
+/**
+* Metodo que permite obtener los datos enviados por ajax y luego inserta un nuevo reintegro
+**/
+    public function insertaReintegro(Request $request) {
+         if ($request->isMethod('get')){    
+            $response = array(
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+            'dato' => $request->lista
+        );
+            return $request->lista[1];
+        }else{
+            return 'no';
+        }
+        
     }
 
     /**

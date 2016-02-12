@@ -1,15 +1,13 @@
+/**
+* Metodo que permite obtener todas las facturas a reintegrar en un array y las ubicada en la lista a reintegrar
+**/
+
 function getCheck(valor) {
-  //var values = "";
   var seleccionado = new Array();
   $.each($("input[name='agregar[]']:checked"), function(index, value) {
     var data = $(this).parents('tr:eq(0)');
     seleccionado.push($(data).find('td:eq(0)').text());
-    /**
-        var data = $(this).parents('tr:eq(0)');
-        if (index > 0)
-          values += " and ";
-        values += $(data).find('td:eq(1)').text() + "," + $(data).find('td:eq(2)').text() + "," + $(data).find('td:eq(3)').text() + ",";
-        **/
+
   });
   $('#listaReintegrar > li').remove();
 
@@ -22,10 +20,23 @@ function getCheck(valor) {
     var element = document.getElementById("listaReintegrar");
     element.appendChild(li);
   });
-  /*
-alert(seleccionado.length);
-  alert(values);
-  var myText = document.getElementById("demo").getElementsByTagName('li');
-  alert(myText[3].childNodes[0].nodeValue);**/
+}
 
+/**
+* Metodo que permite capturar las facturas a reintegrar y las envia al servidor con ajax
+**/
+function insertReintegro(){
+  var lis = new Array();
+  $( ".list-group-item-success" ).each(function( index ) {
+    lis.push($(this).text());
+    alert( lis[index] );
+  });
+
+  $.get('/transaccion/reintegro/insert', {'lista' : lis},
+    function (resp) {
+      alert('algo paso bien' + resp);
+    })
+  .fail(function () {
+    alert("Ha ocurrido un error al procesar la consulta, vuelva a intentarlo vez más tarde");
+    })
 }

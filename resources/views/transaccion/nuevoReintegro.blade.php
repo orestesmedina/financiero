@@ -63,67 +63,42 @@ class="active"
         <div class="container-fluid table-responsive col-md-12"  ng-controller="facturaTemplate">
 
             <div class="container-fluid table-responsive">
-        			<table id="table_reintegro" class="table table-striped">
-                <thead>
-                  <tr>
-                      <th>Num. Documento</th>
-                      <th>Detalle</th>
-                      <th>Monto</th>
-                      <th>Unidad </th>
-                      <th>Partida</th>
-                      <th>Presupuesto</th>
-                      <th>Agregar</th>
+        		<table id="table_reintegro" class="table table-striped">
+                    <thead>
+                      <tr>
+                          <th>Num. Documento</th>
+                          <th>Detalle</th>
+                          <th>Monto</th>
+                          <th>Unidad </th>
+                          <th>Partida</th>
+                          <th>Presupuesto</th>
+                          <th>Agregar</th>
 
-                  </tr>
-                </thead>
-        				<tbody>
-
-        					<tr>
-                    <td>2254</td>
-                    <td>Prueba detalle factura pendiente</td>
-                    <td>$12345</td>
-                    <td>Codigo unidad</td>
-                    <td>Codigo partida</td>
-                    <td>Nombre presupuesto</td>
-                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
-        					</tr>
-                  <tr>
-                    <td>254</td>
-                    <td>Prueba detalle factura pendiente</td>
-                    <td>$12345</td>
-                    <td>Codigo unidad</td>
-                    <td>Codigo partida</td>
-                    <td>Nombre presupuesto</td>
-                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
-        					</tr>
-                  <tr>
-                    <td>24</td>
-                    <td>Prueba detalle factura pendiente</td>
-                    <td>$12345</td>
-                    <td>Codigo unidad</td>
-                    <td>Codigo partida</td>
-                    <td>Nombre presupuesto</td>
-                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
-        					</tr>
-                  <tr>
-                    <td>22</td>
-                    <td>Prueba detalle factura pendiente</td>
-                    <td>$12345</td>
-                    <td>Codigo unidad</td>
-                    <td>Codigo partida</td>
-                    <td>Nombre presupuesto</td>
-                    <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
-        					</tr>
-        				</tbody>
-        			</table>
-        		</div>
+                      </tr>
+                    </thead>
+            		<tbody>
+                    <?php foreach ($pendiente as $pen) { ?>
+        			<tr>
+                        <td><?php echo $pen->documento; ?></td>
+                        <td><?php echo $pen->detalle; ?></td>
+                        <td><?php echo $pen->monto; ?></td>
+                        <td><?php echo $pen->unidad; ?></td>
+                        <td><?php echo $pen->partida; ?></td>
+                        <td><?php echo $pen->presupuesto; ?></td>
+                        <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
+        		    </tr>
+                    <?php }?>
+                  
+        			</tbody>
+        	    </table>
+        	</div>
 
             <ul id="listaReintegrar" class="list-group">
               <a class="list-group-item active">Facturas a reintegrar</a>
             </ul>
 
             <div class="form-group">
-              <input type="submit" value="Agregar Factura" name="buttonName"  class="btn btn-primary pull-right">
+              <input type="button" value="Agregar Factura" name="buttonName" class="btn btn-primary pull-right" onclick="insertReintegro()">
             </div>
         </div>
     </form>

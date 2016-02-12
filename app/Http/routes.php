@@ -163,6 +163,7 @@ Route::resource('transaccion', 'FacturaController');
 Route::get('transaccion/create', 'FacturaController@create');
 Route::get('transaccion/pendiente/create', 'FacturaController@createPendiente'); //ruta factura pendiente
 Route::get('transaccion/reintegro/create', 'FacturaController@createReintregro'); //ruta reintegro factura pendiente
+Route::get('transaccion/reintegro/insert', 'FacturaController@insertaReintegro'); //retua para insertar las facturas a reintegrar en el metodo insertaReintegro
 Route::post('transaccion/{transaccion}/delete', 'FacturaController@destroy');
 
 

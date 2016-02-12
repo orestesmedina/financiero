@@ -17,7 +17,7 @@
 	<link href="/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
 	<link rel="stylesheet" href="/datatables/media/css/jquery.dataTables.min.css">
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="/js/main.js" type="text/javascript"></script>
+	
 	<script src="/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/angular.min.js"></script>
@@ -42,7 +42,7 @@
 	<script src="{!! asset('js/metisMenu.min.js') !!}" type="text/javascript"></script>
 	<script src="{!! asset('js/sb-admin-2.js') !!}" type="text/javascript"></script>
 	<script src="/datatables/media/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
+	<script src="/js/main.js" type="text/javascript"></script>
 
 	<title>Movimientos Presupuestarios - @yield('title')</title>
 
