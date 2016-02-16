@@ -27,12 +27,15 @@ function getCheck(valor) {
 **/
 function insertReintegro(){
   var lis = new Array();
+  var documento = $("#vDocumento").val();
+  var observacion = $('#vDescripcionFactura').val();
+  var fecha = $('#dFechaFactura').val();
   $( ".list-group-item-success" ).each(function( index ) {
     lis.push($(this).text());
     alert( lis[index] );
   });
 
-  $.get('/transaccion/reintegro/insert', {'lista' : lis},
+  $.get('/transaccion/reintegro/insert', {'lista' : lis, 'documento' : documento, 'observacion' : observacion, 'fecha' : fecha},
     function (resp) {
       alert('algo paso bien' + resp);
     })

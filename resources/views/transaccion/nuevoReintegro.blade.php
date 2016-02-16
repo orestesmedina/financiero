@@ -42,7 +42,7 @@ class="active"
             <div class="form-group">
                 <label class="col-md-6 control-label">Observacion:</label>
                 <div class="col-md-6">
-                    <textarea name="vDescripcionFactura" class="form-control" rows="2"></textarea>
+                    <textarea name="vDescripcionFactura" id="vDescripcionFactura" class="form-control" rows="2"></textarea>
                 </div>
             </div>
         </div>
@@ -50,13 +50,13 @@ class="active"
             <div class="form-group">
                 <label class="col-md-5 control-label">Fecha:</label>
                 <div class="col-md-7">
-                    <input type="date"  class="form-control" name="dFechaFactura" max="<%date('Y-m-d')%>" required placeholder="AAAA-MM-DD" maxlength="10">
+                    <input type="date"  class="form-control" id="dFechaFactura" name="dFechaFactura" max="<%date('Y-m-d')%>" required placeholder="AAAA-MM-DD" maxlength="10">
                 </div>
             </div>
             <div class="form-group text-left">
                 <label class="col-md-6 control-label">Num. Documento:</label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" name="vDocumento" value="N/A">
+                    <input type="text" class="form-control" id="vDocumento" name="vDocumento" value="N/A">
                 </div>
             </div >
         </div>

@@ -80,13 +80,31 @@ class FacturaController extends Controller
 * Metodo que permite obtener los datos enviados por ajax y luego inserta un nuevo reintegro
 **/
     public function insertaReintegro(Request $request) {
-         if ($request->isMethod('get')){    
-            $response = array(
-            'status' => 'success',
-            'msg' => 'Setting created successfully',
-            'dato' => $request->lista
-        );
-            return $request->lista[1];
+         if ($request->isMethod('get')){   
+            
+        
+            foreach ($request->lista as $documento) {
+                $factura = DB::table('tfactura')
+                ->select('idFactura')
+                ->where('vDocumento', $documento)
+                ->first();
+
+                DB::table('tfactura')
+                ->where('vDocumento', $documento)
+                ->update(['vTipoFactura' => 'Reintegro']);
+
+                DB::table('treintegro_tfactura')
+                ->insertGetId([
+                    'documento' => $request->documento,
+                    'tfactura_idFactura' => $factura->idFactura,
+                    'fechaReintegro' => $request->fecha,
+                    'observacion' => $request->observacion
+                    ]);
+                
+            }
+        
+
+            return $factura->idFactura;
         }else{
             return 'no';
         }
