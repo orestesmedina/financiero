@@ -89,10 +89,6 @@ class FacturaController extends Controller
                 ->where('vDocumento', $documento)
                 ->first();
 
-                DB::table('tfactura')
-                ->where('vDocumento', $documento)
-                ->update(['vTipoFactura' => 'Reintegro']);
-
                 DB::table('treintegro_tfactura')
                 ->insertGetId([
                     'documento' => $request->documento,
@@ -100,10 +96,12 @@ class FacturaController extends Controller
                     'fechaReintegro' => $request->fecha,
                     'observacion' => $request->observacion
                     ]);
+
+                DB::table('tfactura')
+                ->where('vDocumento', $documento)
+                ->update(['vTipoFactura' => 'Reintegro']);
                 
             }
-        
-
             return $factura->idFactura;
         }else{
             return 'no';

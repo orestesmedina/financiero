@@ -32,14 +32,20 @@ function insertReintegro(){
   var fecha = $('#dFechaFactura').val();
   $( ".list-group-item-success" ).each(function( index ) {
     lis.push($(this).text());
-    alert( lis[index] );
   });
 
   $.get('/transaccion/reintegro/insert', {'lista' : lis, 'documento' : documento, 'observacion' : observacion, 'fecha' : fecha},
     function (resp) {
-      alert('algo paso bien' + resp);
+    $("#myModal").modal();
+    $('#textoModal').text('El reintegro se realizó correctamente.');
+    $('#btnModal').click(function(){
+    location.reload();
+});
+      //location.reload();
+      
     })
   .fail(function () {
-    alert("Ha ocurrido un error al procesar la consulta, vuelva a intentarlo vez más tarde");
+    $("#myModal").modal();
+    $('#textoModal').text('Lo sentimos, algo salió mal durante el proceso de reintegro.');
     })
 }

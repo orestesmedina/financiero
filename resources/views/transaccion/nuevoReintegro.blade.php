@@ -26,6 +26,30 @@ class="active"
         </ul>
     </div>
     @endif
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h4 class="modal-title">Reintegro de caja chica</h4>
+        </div>
+        <div class="modal-body">
+          <p id = "textoModal"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+
     <form class="col-md-12 alert container-fluid table-responsive form-horizontal" method="post" action="/transaccion" onsubmit="buttonName.disabled=true; return true;">
         {!!csrf_field()!!}
         <div class="col-md-12">
