@@ -82,52 +82,39 @@
 						</button>
 						<a class="navbar-brand" href="#"></a>
 					</div>
-					<!--<div id="navbar" class="navbar-collapse collapse"> -->
-					<!--	<div class="navbar-default sidebar" role="navigation"> -->
 					<div id="navbar" class="sidebar sidebar-nav navbar-collapse">
 						<ul class="nav" id="side-menu">
-							<!-- <ul class="nav nav-pills nav-stacked" > -->
-							<!-- <li @yield( 'index')><a href="/" title="Inicio">Inicio</a></li> -->
+						
 							@if(Auth::user() AND Auth::user()->tienePermiso('Ver Coordinacion', Auth::user()->id))
 							<li @yield( 'coord')><a href="/coordinacion" title="Coordinaciones">Coordinación</a></li>
 							@endif @if(Auth::user() AND Auth::user()->tienePermiso('Ver Presupuesto', Auth::user()->id))
 							<li @yield( 'presupuesto')><a href="/presupuesto" title="Presupuestos de Unidad">Presupuestos</a></li>
 							@endif @if(Auth::user() AND Auth::user()->tienePermiso('Ver Partida', Auth::user()->id))
 							<li @yield( 'partida')><a href="/partida" title="Partidas de Presupuesto">Partidas</a></li>
-							@endif @if(Auth::user() AND Auth::user()->tienePermiso('Ver Partida', Auth::user()->id))
+							@endif 
+							@if(Auth::user() AND Auth::user()->tienePermiso('Agregar Transaccion', Auth::user()->id))
+							<li @yield( 'movimiento')>
+								<a href="/transaccion/create" title="Movimientos">Movimientos</a>
+							</li>
+							<!--
 							<li>
-								<a href="#"><i class="fa fa-fw"></i>Movimientos<span class="fa arrow"></span></a>
+								<a href="/transaccion/pendiente/create">Facturas</a>
+							</li>
+							-->
+							<li>
+								<a href="#"><i class="fa fa-fw"></i>Fondos de trabajo<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
-									<li @yield( 'movimiento')><a href="/transaccion/create" title="Movimientos">Otros Movimientos</a></li>
 									<li>
-										<a href="#"><i class="fa fa-fw"></i>Pendientes<span class="fa arrow"></span></a>
-										<ul class="nav nav-third-level">
-											<li>
-												<a href="/transaccion/pendiente/create">Nueva factura pendiente</a>
-											</li>
-											<li>
-												<a href="/transaccion/reintegro/create">Reintregro de caja chica</a>
-											</li>
-										</ul>
+										<a href="/transaccion/reintegro/create">Nuevo</a>
 									</li>
 									<li>
-										<a href="#"><i class="fa fa-fw"></i>Pases<span class="fa arrow"></span></a>
-										<ul class="nav nav-third-level">
-											<li>
-												<a href="#">Pase adicional</a>
-											</li>
-											<li>
-												<a href="#">Pase anulación</a>
-											</li>
-										</ul>
+										<a href="/transaccion/reintegro/update">Modificar</a>
 									</li>
 								</ul>
-							</li>
+							</li>		
+							
 							@endif
-							<!--
-							 @if(Auth::user() AND Auth::user()->tienePermiso('Agregar Transaccion', Auth::user()->id))
-							<li @yield( 'movimiento')><a href="/transaccion/create" title="Movimientos">Nuevo Movimiento</a></li>
-							@endif -->@if(Auth::user() AND Auth::user()->tienePermiso('Ver Transferencia', Auth::user()->id))
+							@if(Auth::user() AND Auth::user()->tienePermiso('Ver Transferencia', Auth::user()->id))
 							<li @yield( 'transferencia')><a href="/transferencia" title="Acerca de">Transferencias</a></li>
 							@endif @if(Auth::user() AND Auth::user()->tienePermiso('Administrar Usuarios', Auth::user()->id))
 							<li @yield( 'admU')><a href="/usuario" title="Acerca de">Administrar Usuarios</a></li>
@@ -138,7 +125,6 @@
 							@endif
 						</ul>
 					</div>
-					<!--	</div> -->
 				</div>
 			</nav>
 		</aside>

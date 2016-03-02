@@ -42,7 +42,7 @@ class FacturaController extends Controller
      * Muestra el formulario para creear una nueva factura pendiente
      *
      * @return \Illuminate\Http\Response
-     */
+     
     public function createPendiente()
     {   if(Auth::user()){
         $anno = DB::table('tconfiguracion')
@@ -55,6 +55,7 @@ class FacturaController extends Controller
         }
         return view('layouts/master');
     }
+    */
 
     /**
      * Muestra el formulario para creear un nuevo reintegro de una factura pendiente
@@ -107,6 +108,74 @@ class FacturaController extends Controller
             return 'no';
         }
         
+    }
+
+    /**
+     * Muestra el formulario para ver la lista de todos los reintegros 
+     * @return \Illuminate\Http\Response
+     */
+    public function updateReintegro()
+    {   if(Auth::user()){
+        $anno = DB::table('tconfiguracion')
+            ->select('iValor')
+            ->where('vConfiguracion','Periodo')
+            ->where('tUsuario_idUsuario', Auth::user()->id)
+            ->first();
+            $listaReintegro = DB::select("SELECT DISTINCT documento, observacion
+                                            FROM treintegro_tfactura ORDER BY documento");
+
+        return view('transaccion/modificarReintegro', ['mensaje' => null, 'anno' => $anno, 'reintegro' => 
+            $listaReintegro]);
+        }
+        return view('layouts/master');
+    }
+
+    public function editReintegro($documento) {
+        if(Auth::user()){
+        $anno = DB::table('tconfiguracion')
+            ->select('iValor')
+            ->where('vConfiguracion','Periodo')
+            ->where('tUsuario_idUsuario', Auth::user()->id)
+            ->first();
+            $reintegro = DB::select("SELECT fac_re.documento AS documentoReintegro, fac_re.observacion AS observacionReintegro, fac_re.fechaReintegro AS fechaReintegro, fac.vDocumento AS documentoFactura, fac.vDetalleFactura AS detalle, fac.iMontoFactura AS monto, presu.tCoordinacion_idCoordinacion AS unidad, fac.tPartida_idPartida AS partida, presu.vNombrePresupuesto AS presupuesto
+                    FROM tfactura AS fac, tpresupuesto AS presu, tpresupuesto_tpartida AS pre_par, treintegro_tfactura AS fac_re
+                    WHERE fac_re.documento = $documento
+                    AND fac_re.tfactura_idFactura = fac.idFactura
+                    AND fac.tPartida_idPartida = pre_par.id
+                    AND pre_par.tPresupuesto_idPresupuesto = presu.idPresupuesto");
+
+        return view('transaccion/editarReintegro', ['mensaje' => null, 'anno' => $anno, 'reintegro' => 
+            $reintegro]);
+        }
+        return view('layouts/master');
+    }
+
+    /*
+    * Metodo que modifica las facturas asociadas a un reintegro especifico, las facturas a eliminar
+    * del reintegro pasan a 'Factura pendiente'
+    */
+    public function modificarReintegro(Request $request) {
+        if ($request->isMethod('get')){   
+            foreach ($request->listaNoSeleccionado as $facturaModificar) {
+
+                $factura = DB::table('tfactura')
+                ->select('idFactura')
+                ->where('vDocumento', $facturaModificar)
+                ->first();
+
+                $deleted = DB::delete('DELETE FROM treintegro_tfactura 
+                    WHERE documento = ? AND tfactura_idFactura = ?', 
+                    [$request->documento, $factura->idFactura]);
+
+                DB::table('tfactura')
+                ->where('idFactura', $factura->idFactura)
+                ->update(['vTipoFactura' => 'Factura pendiente']);
+                
+            }
+            return $deleted;
+        }else{
+            return 'no';
+        }
     }
 
     /**

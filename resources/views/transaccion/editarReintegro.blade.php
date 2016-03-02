@@ -35,7 +35,7 @@ class="active"
       <div class="modal-content">
         <div class="modal-header">
           
-          <h4 class="modal-title">Reintegro fondo de trabajo</h4>
+          <h4 class="modal-title">Reintegro de caja chica</h4>
         </div>
         <div class="modal-body">
           <p id = "textoModal"></p>
@@ -48,25 +48,25 @@ class="active"
     </div>
   </div>
   
-
-
     <form class="col-md-12 alert container-fluid table-responsive form-horizontal" method="post" action="/transaccion" onsubmit="buttonName.disabled=true; return true;">
         {!!csrf_field()!!}
         <div class="col-md-12">
-        <h2>Nuevo Movimiento de Presupuesto</h2>
-        <h3>Reintegro fondo de trabajo</h3>
+        <h2>Reintegro de Caja Chicha</h2>
+        <h3>Modificar Reintegro</h3>
         </div>
         <div class="container-fluid col-md-7">
             <div class="form-group">
                 <label class="col-md-6 control-label" >Tipo de Transacción:</label>
                 <div class="col-md-6">
-                  <input type="text" name="vTipoFactura" value="Reintegro Caja Chica" readonly>
+                  <input type="text" readonly name="vTipoFactura" value="Reintegro Caja Chica" readonly>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-6 control-label">Observacion:</label>
                 <div class="col-md-6">
-                    <textarea name="vDescripcionFactura" id="vDescripcionFactura" class="form-control" rows="2"></textarea>
+                    <textarea name="vDescripcionFactura" id="vDescripcionFactura" class="form-control">
+                        <?php echo $reintegro[0]->observacionReintegro; ?>
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -74,13 +74,13 @@ class="active"
             <div class="form-group">
                 <label class="col-md-5 control-label">Fecha:</label>
                 <div class="col-md-7">
-                    <input type="date"  class="form-control" id="dFechaFactura" name="dFechaFactura" max="<%date('Y-m-d')%>" required placeholder="AAAA-MM-DD" maxlength="10">
+                    <input type="txt" readonly class="form-control" id="dFechaFactura" name="dFechaFactura" value="<?php echo $reintegro[0]->fechaReintegro; ?>">
                 </div>
             </div>
             <div class="form-group text-left">
                 <label class="col-md-6 control-label">Num. Documento:</label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control" id="vDocumento" name="vDocumento" value="">
+                    <input type="text"  readonly class="form-control" id="vDocumento" name="vDocumento" value="<?php echo $reintegro[0]->documentoReintegro; ?>">
                 </div>
             </div >
         </div>
@@ -88,7 +88,7 @@ class="active"
 
             <div class="container-fluid table-responsive">
         		<table id="table_reintegro" class="table table-striped">
-                    <thead>
+                   <thead>
                       <tr>
                           <th>Num. Documento</th>
                           <th>Detalle</th>
@@ -100,30 +100,25 @@ class="active"
 
                       </tr>
                     </thead>
-            		<tbody>
-                    <?php foreach ($pendiente as $pen) { ?>
-        			<tr>
-                        <td><?php echo $pen->documento; ?></td>
-                        <td><?php echo $pen->detalle; ?></td>
-                        <td><?php echo $pen->monto; ?></td>
-                        <td><?php echo $pen->unidad; ?></td>
-                        <td><?php echo $pen->partida; ?></td>
-                        <td><?php echo $pen->presupuesto; ?></td>
-                        <td><input type="checkbox" class="agregar" name="agregar[]" value="1" onclick="getCheck()"></td>
-        		    </tr>
+                    <tbody>
+                    <?php foreach ($reintegro as $reint) { ?>
+                    <tr>
+                        <td><?php echo $reint->documentoFactura; ?></td>
+                        <td><?php echo $reint->detalle; ?></td>
+                        <td><?php echo $reint->monto; ?></td>
+                        <td><?php echo $reint->unidad; ?></td>
+                        <td><?php echo $reint->partida; ?></td>
+                        <td><?php echo $reint->presupuesto; ?></td>
+                        <td><input type="checkbox" checked class="agregar" id="eliminarFactura" name="eliminarFactura" value="1" onclick="editcheck()"></td>
+                    </tr>
                     <?php }?>
                   
-        			</tbody>
+                    </tbody>
         	    </table>
-        	</div>
-
-            <ul id="listaReintegrar" class="list-group">
-              <a class="list-group-item active">Facturas a reintegrar</a>
-            </ul>
-
-            <div class="form-group">
-              <input type="button" value="Agregar Factura" name="buttonName" class="btn btn-primary pull-right" onclick="insertReintegro()">
+                <div class="form-group">
+                <input type="button" value="Modificar Reitegro" disabled name="btnModificarReintegro" id="btnModificarReintegro" onclick="getCheckModificar()" class="btn btn-primary pull-right">
             </div>
+        	</div>
         </div>
     </form>
 

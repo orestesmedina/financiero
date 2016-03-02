@@ -80,12 +80,61 @@ Route::post('partida/editar/{id}', 'PartidaController@updatePresupuestoPartida')
 Route::post('/transferencia/verificar', 'PartidaController@transferencia');
 Route::get('/transferencia/{transferencia}', 'PartidaController@verTransferencia');
 Route::get('/transferencia', function () {
-    $anno = DB::table('tconfiguracion')
+    
+$anno = DB::table('tconfiguracion')
             ->select('iValor')
             ->where('vConfiguracion','Periodo')
             ->where('tUsuario_idUsuario', Auth::user()->id)
             ->first();
-    return view('transferencia/transferencia', ['anno'=> $anno]);});
+/**    
+    $transferencia = DB::select("SELECT tran_par.idTransferencia AS id,  coo.idCoordinacion as idCorDe, coo.vNombreCoordinacion as nomCorDe, pre.vNombrePresupuesto as nomPreDe, pre.anno as annoDe, par.codPartida as parDe, tran_par.vDocumento, tran_par.iMontoTransferencia,(SELECT coo.idCoordinacion as idCorA FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaA = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida) as idCorA, (SELECT coo.vNombreCoordinacion FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaA = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida) as nomCorA, (SELECT pre.vNombrePresupuesto FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaA = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida) as nomPreA, (SELECT pre.anno FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaA = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida) as annoA, (SELECT par.codPartida FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaA = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida) as parA
+FROM tcoordinacion AS coo, tpresupuesto AS pre, tpartida AS par, ttranferencia_partida AS tran_par, tpresupuesto_tpartida AS pre_par
+WHERE coo.idCoordinacion = pre.tCoordinacion_idCoordinacion
+AND tran_par.tPresupuestoPartidaDe = pre_par.id
+AND pre_par.tPresupuesto_idPresupuesto = pre.idPresupuesto
+AND pre_par.tPartida_idPartida = par.idPartida
+AND tran_par.vDocumento NOT LIKE  'PS_%'");
+
+
+<?php foreach ($transferencia as $de) {?>
+                    <tr>
+                    <td><?php echo $de->idCorDe ?>-<?php echo $de->nomCorDe ?> </td>
+                    <td><?php echo $de->nomPreDe ?>-<?php echo $de->annoDe ?></td>
+                    <td><?php echo $de->parDe ?></td>
+                    <td><?php echo $de->idCorA ?>-<?php echo $de->nomCorA ?> </td>
+                    <td><?php echo $de->nomPreA ?>-<?php echo $de->annoA ?></td>
+                    <td><?php echo $de->parA ?></td>
+                    <td><?php echo $de->vDocumento ?></td>
+                    <td><?php echo $de->iMontoTransferencia ?></td>
+                    <td>
+                        <a href="/transferencia/<?php echo $de->id ?>"  class="btn btn-info" title="Ver detalles de la transferencia">Ver</a>
+                    </td>
+                </tr>
+                <?php }?>
+    
+**/
+    return view('transferencia/transferencia', ['anno'=> $anno/*, 'transferencia' => $transferencia*/]);
+});
 
 Route::get('/create/transferencia', function () {
     if(Auth::user()){
@@ -161,10 +210,13 @@ Route::get('/presupuesto/informe-fin-gestion/{idPresupuesto}',function($idPresup
 //Factura routes...
 Route::resource('transaccion', 'FacturaController');
 Route::get('transaccion/create', 'FacturaController@create');
-Route::get('transaccion/pendiente/create', 'FacturaController@createPendiente'); //ruta factura pendiente
+//Route::get('transaccion/pendiente/create', 'FacturaController@createPendiente'); //ruta factura pendiente
 Route::get('transaccion/reintegro/create', 'FacturaController@createReintregro'); //ruta reintegro factura pendiente
 Route::get('transaccion/reintegro/insert', 'FacturaController@insertaReintegro'); //retua para insertar las facturas a reintegrar en el metodo insertaReintegro
 Route::post('transaccion/{transaccion}/delete', 'FacturaController@destroy');
+Route::get('transaccion/reintegro/update', "FacturaController@updateReintegro"); //ruta modificar reintegro
+Route::get('transaccion/reintegro/modificar', "FacturaController@modificarReintegro"); //ruta modificar reintegro
+Route::get('transaccion/reintegro/{documento}/edit', "FacturaController@editReintegro"); //ruta que muestra un reintegro especifico por medio del numero de documento
 
 
 //Rutas de usuarios

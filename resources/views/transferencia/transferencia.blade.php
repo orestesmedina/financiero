@@ -50,6 +50,7 @@ class="active"
 					@endif
 
 				</tr>
+
 				<tr ng-repeat="transferencia in modelT | filter : search | orderBy : myOrder track by $index">
 					<td>{{transferencia.idCoorDe}}-{{transferencia.nomCoorDe}} </td>
 					<td>{{transferencia.nomPresDe}}-{{transferencia.annoDe}}</td>
@@ -63,6 +64,10 @@ class="active"
 						<a href="/transferencia/{{transferencia.codTransDe}}"  class="btn btn-info" title="Ver detalles de la transferencia">Ver</a>
 					</td>
 				</tr>
+
+
+				
+				
 			</tbody>
 		</table>
 	</div>
