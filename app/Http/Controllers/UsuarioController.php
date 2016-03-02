@@ -45,7 +45,7 @@ class UsuarioController extends Controller
 
         $server_name   = "localhost";
         $username      = "root";
-        $password      = "1234";
+        $password      = "orestes";
         $database_name = "presupuestooaf";
         $date_string   = date("d-m-Y-H:i:s");
 
