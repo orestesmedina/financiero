@@ -8,7 +8,7 @@
 -- Versión de PHP: 5.6.14-0+deb8u1
 
 
-
+CREATE DATABASE presupuestooaf;
 USE presupuestooaf;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";

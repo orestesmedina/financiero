@@ -235,3 +235,25 @@ INSERT INTO tpartida (codPartida,vNombrePartida,vDescripcion) VALUES ('8-02-06-0
 INSERT INTO tpartida (codPartida,vNombrePartida,vDescripcion) VALUES ('8-02-07-00','Amortización de préstamos del Sector Privado','Corresponde a los pagos que realiza la institución para atender el principal de las deudas contraídas por concepto de préstamos directos, avales asumidos y créditos de proveedores, concedidos por entes del sector privado.');
 INSERT INTO tpartida (codPartida,vNombrePartida,vDescripcion) VALUES ('9-02-01-00','Sumas libres sin asignación presupuestaria','Incluye los montos a las que por diversas circunstancias no se les ha dado una asignación en las partidas, grupos y subpartidas presupuestarias.');
 
+
+
+
+
+
+
+
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1050','DOCENCIA');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1051','INVESTIGACIÓN');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1052','ACCIÓN SOCIAL');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1053','VIDA ESTUDIANTIL');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1054','ADMINISTRACIÓN');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1055','DIRECCIÓN SUPERIOR DE LA SEDE DEL PACÍFICO');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('2980','SERVICIOS DE MUELLE SEDE REG. PACÍFICO');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('2981','RESIDENCIAS ESTUDIANTILES S.R.P.');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('1942','LEY DE PESCA NO. 8436 SEDE PACÍFICO');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('2009','ACTIVIDAD DEPORTIVA SEDE REG. PACÍFICO');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('2047','MAESTRÍA PROFESIONAL EN GESTIÓN HOTELERA');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('7508','PACÍFICO CENTRAL');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('5907','SEDE REGIONAL PACÍFICO, ADMINISTRACIÓN');
+INSERT INTO tcoordinacion (idCoordinacion,vNombreCoordinacion) VALUES ('6005','BACH. Y LIC. ADM. EMP. C/ENF. PROD. UNED-UCR');
+
